@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.edu.bsu.gosuslugi.entity.DepartmentEntity;
 import ru.edu.bsu.gosuslugi.exception.DepartmentAlreadyExistException;
+import ru.edu.bsu.gosuslugi.exception.DepartmentIdNotTransferredException;
 import ru.edu.bsu.gosuslugi.exception.DepartmentsNotFoundException;
 import ru.edu.bsu.gosuslugi.model.Department;
 import ru.edu.bsu.gosuslugi.repository.DepartmetRepo;
@@ -38,5 +39,20 @@ public class DepartmentService {
         } else {
             return Department.toModel(department);
         }
+    }
+
+    public Long deleteDepartment(Long id) throws DepartmentIdNotTransferredException, DepartmentsNotFoundException {
+        if (id != null) {
+            if (departmetRepo.findById(id).get() != null) {
+                departmetRepo.deleteById(id);
+                return id;
+            } else {
+                throw new DepartmentsNotFoundException("Department not found!");
+            }
+
+        } else {
+            throw new DepartmentIdNotTransferredException("Department ID not transferred");
+        }
+
     }
 }

@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.edu.bsu.gosuslugi.entity.DepartmentEntity;
 import ru.edu.bsu.gosuslugi.exception.DepartmentAlreadyExistException;
+import ru.edu.bsu.gosuslugi.exception.DepartmentIdNotTransferredException;
 import ru.edu.bsu.gosuslugi.exception.DepartmentsNotFoundException;
 import ru.edu.bsu.gosuslugi.service.DepartmentService;
 
@@ -49,5 +50,17 @@ public class DepartmentController {
         }
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity deleteDepartment(@PathVariable Long id) {
+        try {
+            return ResponseEntity.ok(departmentService.deleteDepartment(id));
+        } catch (DepartmentIdNotTransferredException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (DepartmentsNotFoundException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error");
+        }
+    }
 
 }
