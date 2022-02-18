@@ -1,9 +1,7 @@
 package ru.edu.bsu.gosuslugi.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class DepartmentEntity {
@@ -11,6 +9,9 @@ public class DepartmentEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "department")
+    private List<SubdepartmentEnity> subdepartment;
 
     public DepartmentEntity() {
     }
@@ -25,6 +26,14 @@ public class DepartmentEntity {
 
     public String getName() {
         return name;
+    }
+
+    public List<SubdepartmentEnity> getSubdepartment() {
+        return subdepartment;
+    }
+
+    public void setSubdepartment(List<SubdepartmentEnity> subdepartment) {
+        this.subdepartment = subdepartment;
     }
 
     public void setName(String name) {
