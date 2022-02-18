@@ -3,6 +3,7 @@ package ru.edu.bsu.gosuslugi.entity;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "subdepartment")
 public class SubdepartmentEnity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
