@@ -1,6 +1,7 @@
 package ru.edu.bsu.gosuslugi.entity;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "service")
@@ -14,7 +15,18 @@ public class ServiceEntity {
     @JoinColumn(name = "subdepartment_id")
     private SubdepartmentEnity subdepartment;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "service")
+    private List<UserService> userServices;
+
     public ServiceEntity() {
+    }
+
+    public List<UserService> getUserServices() {
+        return userServices;
+    }
+
+    public void setUserServices(List<UserService> userServices) {
+        this.userServices = userServices;
     }
 
     public SubdepartmentEnity getSubdepartment() {
