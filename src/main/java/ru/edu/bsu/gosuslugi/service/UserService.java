@@ -3,12 +3,8 @@ package ru.edu.bsu.gosuslugi.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.MessageDigestPasswordEncoder;
 import org.springframework.stereotype.Service;
-import ru.edu.bsu.gosuslugi.entity.DepartmentEntity;
 import ru.edu.bsu.gosuslugi.entity.UserEntity;
-import ru.edu.bsu.gosuslugi.exception.DepartmentsNotFoundException;
-import ru.edu.bsu.gosuslugi.exception.UserAlreadyExistException;
-import ru.edu.bsu.gosuslugi.exception.UserNotFoundException;
-import ru.edu.bsu.gosuslugi.model.Department;
+import ru.edu.bsu.gosuslugi.exception.*;
 import ru.edu.bsu.gosuslugi.model.User;
 import ru.edu.bsu.gosuslugi.repository.UserRepo;
 
@@ -40,5 +36,20 @@ public class UserService {
         } else {
             return User.toModel(user);
         }
+    }
+
+    public Long deleteUser(Long id) throws UserIdNotTransferredException, UserNotFoundException {
+        if (id != null) {
+            if (userRepo.findById(id).get() != null) {
+                userRepo.deleteById(id);
+                return id;
+            } else {
+                throw new UserNotFoundException("User not found!");
+            }
+
+        } else {
+            throw new UserIdNotTransferredException("User ID not transferred");
+        }
+
     }
 }
