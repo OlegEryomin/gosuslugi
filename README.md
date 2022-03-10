@@ -1,3 +1,1 @@
-# gosuslugi
-
-Пример разработки REST - сервиса на Java Spring
+# Пример разработки REST - сервиса на Java Spring
